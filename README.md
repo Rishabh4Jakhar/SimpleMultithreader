@@ -1,15 +1,16 @@
 # Multi Threader
 
- ## Working
-.When the parallel_for is invoked in the given programs, it goes into the respective function template defined in the header file.
+## Working
 
-.It divides the process into numThreads threads and carries all the processes simultaneously.
+- When the parallel_for is invoked in the given programs, it goes into the respective function template defined in the header file.
 
-.The remaining processes are directly executed.
+- It divides the process into numThreads threads and carries all the processes simultaneously.
 
-.Checks for input errors and thread creation errors is there.
+- The remaining processes are directly executed.
 
-.Execution time is displayed for each parallel_for.
+- Checks for input errors and thread creation errors is there.
+
+- Execution time is displayed for each parallel_for.
 
 
 ## Contributions:
@@ -20,4 +21,4 @@
 
 
 ## Github Repo Link:
-https://github.com/Rishabh4Jakhar/SimpleMultithreader
+[Repo Link](https://github.com/Rishabh4Jakhar/SimpleMultithreader)
