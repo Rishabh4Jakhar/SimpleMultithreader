@@ -24,7 +24,7 @@ void *thread_func_1(void *ptr) {
   for (int i = t->st1; i < t->end1; i++) {
     t->lambda1(i);
   }
-  return NULL;
+  return nullptr;
 }
 
 // thread_func to implement matrix multiplication in 2D
@@ -36,14 +36,14 @@ void *thread_func_2(void *ptr) {
       t->lambda2(i, j);
     }
   }
-  return NULL;
+  return nullptr;
 }
 
 // Parallelising the lambda function in 1D
 void parallel_for(int low, int high, std::function<void(int)> &&lambda, int numThreads) {
-  struct timespec start_time;
+  struct timespec start_time, end_time;
   if (clock_gettime(CLOCK_MONOTONIC, &start_time) == -1) {
-    perror("simple-multithreader.h: clock_gettime");
+    perror("Error: simple-multithreader.h: clock_gettime");
     exit(EXIT_FAILURE);
   }
   // initialising
@@ -57,14 +57,14 @@ void parallel_for(int low, int high, std::function<void(int)> &&lambda, int numT
     args[i].lambda1 = lambda;
     args[i].end1 = low + (i + 1) * chunk;
     if (pthread_create(&tid[i],
-                       NULL,
+                       nullptr,
                        thread_func_1,
                        (void *)&args[i]) == -1) {
       std::cout << "pthread_create failed" << std::endl;
     }
   }
   for (int i = 0; i < numThreads; i++) {
-    if (pthread_join(tid[i], NULL) != 0) {
+    if (pthread_join(tid[i], nullptr) != 0) {
       std::cout << "pthread_join failed" << std::endl;
     }
   }
@@ -74,7 +74,6 @@ void parallel_for(int low, int high, std::function<void(int)> &&lambda, int numT
       lambda(i);
     }
   }
-  struct timespec end_time;
   if (clock_gettime(CLOCK_MONOTONIC, &end_time) == -1) {
     perror("simple-multithreader.h: clock_gettime");
     exit(EXIT_FAILURE);
@@ -84,9 +83,9 @@ void parallel_for(int low, int high, std::function<void(int)> &&lambda, int numT
 }
 
 void parallel_for(int low1, int high1, int low2, int high2, std::function<void(int, int)> &&lambda, int numThreads) {
-  struct timespec start_time;
+  struct timespec start_time, end_time;
   if (clock_gettime(CLOCK_MONOTONIC, &start_time) == -1) {
-    perror("simple-multithreader.h: clock_gettime");
+    perror("Error: simple-multithreader.h: clock_gettime");
     exit(EXIT_FAILURE);
   }
   // initialising 
@@ -104,14 +103,14 @@ void parallel_for(int low1, int high1, int low2, int high2, std::function<void(i
     args[i].end2 = high2;
     args[i].lambda2 = lambda;
     if (pthread_create(&tid[i],
-                       NULL,
+                       nullptr,
                        thread_func_2,
                        (void *)&args[i]) == -1) {
       std::cout << "pthread_create failed" << std::endl;
     }
   }
   for (int i = 0; i < numThreads; i++) {
-    if (pthread_join(tid[i], NULL) != 0) {
+    if (pthread_join(tid[i], nullptr) != 0) {
       std::cout << "pthread_join failed" << std::endl;
     }
   }
@@ -124,7 +123,6 @@ void parallel_for(int low1, int high1, int low2, int high2, std::function<void(i
       }
     }
   }
-  struct timespec end_time;
   if (clock_gettime(CLOCK_MONOTONIC, &end_time) == -1) {
     perror("simple-multithreader.h: clock_gettime");
     exit(EXIT_FAILURE);
